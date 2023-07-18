@@ -46,7 +46,7 @@ helm repo add mongodb https://mongodb.github.io/helm-charts
 
 # Running the demo
 
-To automatically setup the demo, run `demo_start.sh`, it should take less than 5 minutes to have everything up and running. Since Confluent for Kubernetes is stateful that command can be run multiple times (in case of failure).
+To automatically setup the demo, run `./demo_start.sh`, it should take less than 5 minutes to have everything up and running. Since Confluent for Kubernetes is stateful that command can be run multiple times (in case of failure).
 
 Once completed, go to http://controlcenter.localhost:9021 to access Confluent Control Center.
 
@@ -216,7 +216,7 @@ curl connect-bootstrap-lb.localhost:8083/connectors/mongodb-sink/status | jq -r 
 
 # Stopping the demo
 
-To automatically stop the demo, please run `demo_stop.sh`.
+To automatically stop the demo, please run `./demo_stop.sh`.
 
 In case the stop script fails, see below the steps to be followed:
 ```
