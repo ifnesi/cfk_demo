@@ -2,7 +2,7 @@
 
 # Confluent for Kubernetes Demo - Overview
 
-This MacOS setup guide will help you to setup Confluent Platform (using Confluent for Kubernetes) and MongoDB Community edition (using MongoDB Operator).
+This guide, designed for MacOS, will help you to setup Confluent Platform (using Confluent for Kubernetes) and MongoDB Community edition (using MongoDB Operator).
 
 ![image](docs/architecture-diagram.png)
 
@@ -10,6 +10,10 @@ CfK demo based on https://github.com/confluentinc/confluent-kubernetes-examples/
 
 MongoDB demo based on: https://github.com/mongodb/mongodb-kubernetes-operator/blob/master/config/samples/mongodb.com_v1_mongodbcommunity_additional_mongod_config_cr.yaml
 
+To learn more about Confluent for Kubernetes, see reference materials below:
+- https://www.confluent.io/blog/confluent-for-kubernetes-offers-cloud-native-kafka-automation
+- https://docs.confluent.io/operator/current/overview.html
+<br><br>
 # Pre-requisites
 - `brew`
 - `jq`
@@ -88,7 +92,7 @@ Output example:
 }
 ```
 
-To show how easily scale the Kafka Cluster by adding a new broker (Confluent Server), edit the file `confluent-platform.yaml` by changing line #24 from `  replicas: 3` to `  replicas: 4`, then run the command `kubectl apply -f confluent-platform.yaml --namespace confluent`. In around 3~5 minutes a new broker will be added to the cluster as well as a new task will Self Balancing Cluster task will be started. To scale back down change the number of replicas back to `3` and run the same command.
+To show how easily scale the Kafka Cluster by adding a new broker (Confluent Server), edit the file `confluent-platform.yaml` by changing line #24 from `  replicas: 3` to `  replicas: 4`, then run the command `kubectl apply -f confluent-platform.yaml --namespace confluent`. In around 3~5 minutes a new broker will be added to the cluster as well as a new Self Balancing Cluster task will be started. To scale back down change the number of replicas back to `3` and run the same command.
 
 ## In case the start script fails, see below the steps to be followed:
 
