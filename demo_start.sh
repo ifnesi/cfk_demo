@@ -54,36 +54,52 @@ echo "2. Creating Confluent Platform pods"
 echo "-----------------------------------"
 kubectl apply -f confluent-platform.yaml --namespace $NAMESPACE
 verifyPods
+echo ""
+echo "Go to http://controlcenter.localhost:9021 to access Confluent Control Center"
+sleep 10
+
+# Demo app to produce data to topic producer-perf-test
+echo ""
+echo "----------------------------------------------------------------"
+echo "3. Creating demo app to produce data to topic producer-perf-test"
+echo "----------------------------------------------------------------"
+kubectl apply -f producer-app-data.yaml --namespace $NAMESPACE
+sleep 3
 
 # Create Datagen connectors
 echo ""
 echo "------------------------------"
-echo "3. Creating Datagen connectors"
+echo "4. Creating Datagen connectors"
 echo "------------------------------"
 kubectl apply -f confluent-datagen-connectors.yaml --namespace $NAMESPACE
+sleep 3
+echo ""
+echo "Connector status:"
+curl connect-bootstrap-lb.localhost:8083/connectors/pageviews/status | jq
+curl connect-bootstrap-lb.localhost:8083/connectors/users/status | jq
 
 # Install MongoDB Community edition
 echo ""
 echo "---------------------------------------"
-echo "4. Installing MongoDB Community edition"
+echo "5. Installing MongoDB Community edition"
 echo "---------------------------------------"
-helm install community-operator mongodb/community-operator --namespace confluent
+helm upgrade --install community-operator mongodb/community-operator --namespace $NAMESPACE
 verifyPods
-kubectl apply -f mongodb_community.yaml --namespace confluent
+kubectl apply -f mongodb_community.yaml --namespace $NAMESPACE
 verifyPods
 kubectl get mdbc
 
 # Submit ksqlDB queries via HTTP
 echo ""
 echo "------------------------------------"
-echo "5. Submiting ksqlDB queries via HTTP"
+echo "6. Submiting ksqlDB queries via HTTP"
 echo "------------------------------------"
 ./ksql_rest.sh create_statements.sql
 
 # Create MongoDB sink connector
 echo ""
 echo "----------------------------------"
-echo "6. Creating MongoDB sink connector"
+echo "7. Creating MongoDB sink connector"
 echo "----------------------------------"
 kubectl apply -f confluent-mongodb-connector.yaml --namespace $NAMESPACE
 sleep 3
@@ -92,5 +108,5 @@ echo "Connector status:"
 curl connect-bootstrap-lb.localhost:8083/connectors/mongodb-sink/status | jq
 
 echo ""
-echo "Script is completed, please go to http://controlcenter.localhost:9021 to access Confluent Control Center"
+echo "Script is completed! Please go to http://controlcenter.localhost:9021 to access Confluent Control Center"
 echo ""

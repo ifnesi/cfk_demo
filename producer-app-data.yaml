@@ -1,9 +1,9 @@
 ---
-# Topic: elastic-0
+# Topic: producer-perf-test
 apiVersion: platform.confluent.io/v1beta1
 kind: KafkaTopic
 metadata:
-  name: elastic-0
+  name: producer-perf-test
   namespace: confluent
 spec:
   replicas: 3
@@ -24,29 +24,29 @@ data:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: elastic
+  name: producer-perf-test
   namespace: confluent
 spec:
-  serviceName: elastic
+  serviceName: producer-perf-test
   podManagementPolicy: Parallel
   replicas: 1
   selector:
     matchLabels:
-      app: elastic
+      app: producer-perf-test
   template:
     metadata:
       labels:
-        app: elastic
+        app: producer-perf-test
     spec:
       containers:
-      - name: elastic
+      - name: producer-perf-test
         image: confluentinc/cp-kafka:latest
         command:
         - /bin/sh
         - -c
         - |
           kafka-producer-perf-test \
-            --topic elastic-0  \
+            --topic producer-perf-test  \
             --record-size 64 \
             --throughput 1 \
             --producer.config /mnt/kafka.properties \
@@ -67,6 +67,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: elastic
+  name: producer-perf-test
 spec:
   clusterIP: None

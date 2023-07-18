@@ -229,11 +229,15 @@ To automatically stop the demo, please run `./demo_stop.sh`.
 
 In case the stop script fails, see below the steps to be followed:
 ```
+kubectl config set-context --current --namespace=confluent
+
 kubectl delete -f confluent-mongodb-connector.yaml
 
 kubectl delete -f mongodb_community.yaml
 
 helm uninstall community-operator
+
+kubectl delete -f producer-app-data.yaml
 
 kubectl delete -f confluent-datagen-connectors.yaml
 
