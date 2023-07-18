@@ -11,9 +11,11 @@ CfK demo based on https://github.com/confluentinc/confluent-kubernetes-examples/
 MongoDB demo based on: https://github.com/mongodb/mongodb-kubernetes-operator/blob/master/config/samples/mongodb.com_v1_mongodbcommunity_additional_mongod_config_cr.yaml
 
 # Pre-requisites
-- Local install of brew
-- Local install of jq/curl
-- Local install of [Docker Desktop](https://docs.docker.com/get-docker/)
+- `brew`
+- `jq`
+- `curl`
+- [Docker Desktop](https://docs.docker.com/get-docker/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos)
 
 # Installation (only need to do that once)
 
