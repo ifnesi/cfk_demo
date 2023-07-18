@@ -1,0 +1,30 @@
+---
+# MongoDB: accomplished_female_readers
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: mongodb-sink
+  namespace: confluent
+spec:
+  class: com.mongodb.kafka.connect.MongoSinkConnector
+  taskMax: 1
+  connectClusterRef:
+    name: connect
+  configs:
+    connection.uri: "mongodb://demo-user:1234567890@mongo-0.mongo-svc.confluent.svc.cluster.local:27017,mongo-1.mongo-svc.confluent.svc.cluster.local:27017,mongo-2.mongo-svc.confluent.svc.cluster.local:27017/admin?replicaSet=mongo&ssl=false&retryWrites=false"
+    max.num.retries: "3"
+    retries.defer.timeout: "5000"
+    write.strategy: DefaultWriteModelStrategy
+    doc.id.strategy: UuidStrategy
+    max.batch.size: "1"
+    database: local
+    collection: accomplished_female_readers
+    topics: accomplished_female_readers
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    value.converter: io.confluent.connect.avro.AvroConverter
+    value.converter.schema.registry.url: http://schemaregistry.confluent.svc.cluster.local:8081
+
+# View connectors/status
+# curl connect-bootstrap-lb.localhost:8083/connectors | jq
+# curl connect-bootstrap-lb.localhost:8083/connectors/mongodb-sink/status | jq
+# curl connect-bootstrap-lb.localhost:8083/connectors/mongodb-sink/status | jq -r '.tasks[0].trace'

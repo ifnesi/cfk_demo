@@ -1,0 +1,12 @@
+---
+# TOpic: demo-users
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: demo-users
+  namespace: confluent
+spec:
+  replicas: 3
+  partitionCount: 6
+  configs:
+    cleanup.policy: "delete"

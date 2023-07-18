@@ -1,0 +1,159 @@
+# Based on https://github.com/confluentinc/confluent-kubernetes-examples/quickstart-deploy
+---
+# Zookepper
+apiVersion: platform.confluent.io/v1beta1
+kind: Zookeeper
+metadata:
+ name: zookeeper
+ namespace: confluent
+spec:
+ replicas: 3
+ image:
+   application: confluentinc/cp-zookeeper:7.4.0
+   init: confluentinc/confluent-init-container:2.6.0
+ dataVolumeCapacity: 10Gi
+ logVolumeCapacity: 10Gi
+---
+# Kafka Cluster
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka
+  namespace: confluent
+spec:
+  replicas: 3
+  image:
+    application: confluentinc/cp-server:7.4.0
+    init: confluentinc/confluent-init-container:2.6.0
+  dataVolumeCapacity: 100Gi
+  metricReporter:
+    enabled: true
+  dependencies:
+    zookeeper:
+      endpoint: zookeeper.confluent.svc.cluster.local:2181
+  listeners:
+      external:
+        externalAccess:
+          type: loadBalancer
+          loadBalancer:
+            domain: localhost
+---
+# Connect Cluster (with kafka-connect-datagen and mongodb sink plugins)
+apiVersion: platform.confluent.io/v1beta1
+kind: Connect
+metadata:
+  name: connect
+  namespace: confluent
+spec:
+  replicas: 1
+  image:
+    application: confluentinc/cp-server-connect:7.4.0
+    init: confluentinc/confluent-init-container:2.6.0
+  build:
+    type: onDemand
+    onDemand:
+      plugins:
+        locationType: confluentHub
+        confluentHub:
+          - name: kafka-connect-datagen
+            owner: confluentinc
+            version: 0.5.2
+          - name: kafka-connect-mongodb
+            owner: mongodb
+            version: 1.10.1
+  dependencies:
+    kafka:
+      bootstrapEndpoint: kafka:9071
+    schemaRegistry:
+      url: http://schemaregistry.confluent.svc.cluster.local:8081
+  externalAccess:
+    type: loadBalancer
+    loadBalancer:
+      domain: localhost
+      port: 8083
+---
+# KsqlDB Cluster
+apiVersion: platform.confluent.io/v1beta1
+kind: KsqlDB
+metadata:
+  name: ksqldb
+  namespace: confluent
+spec:
+  replicas: 1
+  image:
+    application: confluentinc/cp-ksqldb-server:7.4.0
+    init: confluentinc/confluent-init-container:2.6.0
+  dataVolumeCapacity: 10Gi
+  dependencies:
+    kafka:
+      bootstrapEndpoint: kafka:9071
+    schemaRegistry:
+      url: http://schemaregistry.confluent.svc.cluster.local:8081
+  externalAccess:
+    type: loadBalancer
+    loadBalancer:
+      domain: localhost
+      port: 8088
+---
+# Control Center
+apiVersion: platform.confluent.io/v1beta1
+kind: ControlCenter
+metadata:
+  name: controlcenter
+  namespace: confluent
+spec:
+  replicas: 1
+  image:
+    application: confluentinc/cp-enterprise-control-center:7.4.0
+    init: confluentinc/confluent-init-container:2.6.0
+  dataVolumeCapacity: 10Gi
+  dependencies:
+    schemaRegistry:
+      url: http://schemaregistry.confluent.svc.cluster.local:8081
+    ksqldb:
+    - name: ksqldb
+      url: http://ksqldb.confluent.svc.cluster.local:8088
+    connect:
+    - name: connect
+      url: http://connect.confluent.svc.cluster.local:8083
+  externalAccess:
+    type: loadBalancer
+    loadBalancer:
+      domain: localhost
+      port: 9021
+---
+# Schema Registry
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaRegistry
+metadata:
+  name: schemaregistry
+  namespace: confluent
+spec:
+  replicas: 2
+  image:
+    application: confluentinc/cp-schema-registry:7.4.0
+    init: confluentinc/confluent-init-container:2.6.0
+  externalAccess:
+    type: loadBalancer
+    loadBalancer:
+      domain: localhost
+      port: 8081
+---
+# Kafka Rest Proxy
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaRestProxy
+metadata:
+  name: kafkarestproxy
+  namespace: confluent
+spec:
+  replicas: 1
+  image:
+    application: confluentinc/cp-kafka-rest:7.4.0
+    init: confluentinc/confluent-init-container:2.6.0
+  dependencies:
+    schemaRegistry:
+      url: http://schemaregistry.confluent.svc.cluster.local:8081
+  externalAccess:
+    type: loadBalancer
+    loadBalancer:
+      domain: localhost
