@@ -4,6 +4,15 @@
 
 This guide, designed for MacOS, will help you to setup Confluent Platform (using Confluent for Kubernetes) and MongoDB Community edition (using MongoDB Operator).
 
+The following ports will be open (as external access through `*.localhost` will be enabled):
+- confluent-operator.localhost:          7778/TCP
+- connect-bootstrap-lb.localhost:        8083/TCP
+- controlcenter-bootstrap-lb.localhost:  9021/TCP
+- kafka-bootstrap-lb.localhost:          9092/TCP
+- kafkarestproxy-bootstrap-lb.localhost: 80/TCP
+- ksqldb-bootstrap-lb.localhost:         8088/TCP
+- schemaregistry-bootstrap-lb.localhost: 8081/TCP
+
 ![image](docs/architecture-diagram.png)
 
 CfK demo based on https://github.com/confluentinc/confluent-kubernetes-examples/quickstart-deploy
@@ -46,7 +55,7 @@ helm repo add mongodb https://mongodb.github.io/helm-charts
 
 # Running the demo
 
-To automatically setup the demo, run `./demo_start.sh`, it should take less than 5 minutes to have everything up and running. Since Confluent for Kubernetes is stateful that command can be run multiple times (in case of failure).
+To automatically setup the demo, run `./demo_start.sh`, it should take less than 5 minutes to have everything up and running. Since Confluent for Kubernetes is stateful that script can be aborted and run multiple times (in case of failure).
 
 Once completed, go to http://controlcenter.localhost:9021 to access Confluent Control Center.
 
