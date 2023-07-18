@@ -5,13 +5,13 @@
 This guide, designed for MacOS, will help you to setup Confluent Platform (using Confluent for Kubernetes) and MongoDB Community edition (using MongoDB Operator).
 
 The following ports will be open (as external access through `*.localhost` will be enabled):
-- confluent-operator.localhost:          7778/TCP
-- connect-bootstrap-lb.localhost:        8083/TCP
-- controlcenter-bootstrap-lb.localhost:  9021/TCP
-- kafka-bootstrap-lb.localhost:          9092/TCP
-- kafkarestproxy-bootstrap-lb.localhost: 80/TCP
-- ksqldb-bootstrap-lb.localhost:         8088/TCP
-- schemaregistry-bootstrap-lb.localhost: 8081/TCP
+- confluent-operator.localhost: `7778/TCP`
+- connect.localhost: `8083/TCP`
+- controlcenter.localhost: `9021/TCP`
+- kafka.localhost: `9092/TCP`
+- kafkarestproxy.localhost: `80/TCP`
+- ksqldb.localhost: `8088/TCP`
+- schemaregistry.localhost: `8081/TCP`
 
 ![image](docs/architecture-diagram.png)
 
