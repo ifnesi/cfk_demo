@@ -10,7 +10,7 @@ verifyPods() {
     while [ $(kubectl get pods -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}' | grep -c False) -ne 0 ]
     do
         echo "Waiting for pod(s) to be ready..."
-        sleep 5
+        sleep 10
     done
 
     echo "Pod(s) are ready"
