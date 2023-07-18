@@ -88,7 +88,7 @@ Output example:
 }
 ```
 
-To show how easily scale the Kafka Cluster by adding a new broker (Confluent Server), edit the file `confluent-platform.yaml` by changing line #24 from `  replicas: 3` to `  replicas: 4`, then run the command `kubectl apply -f confluent-platform.yaml --namespace confluent`. In around 3~5 minutes a new broker will be added to the cluster as well as a new task will Self Balancing Cluster task will be started. To scale back down change the number of replicas back to `3`.
+To show how easily scale the Kafka Cluster by adding a new broker (Confluent Server), edit the file `confluent-platform.yaml` by changing line #24 from `  replicas: 3` to `  replicas: 4`, then run the command `kubectl apply -f confluent-platform.yaml --namespace confluent`. In around 3~5 minutes a new broker will be added to the cluster as well as a new task will Self Balancing Cluster task will be started. To scale back down change the number of replicas back to `3` and run the same command.
 
 ## In case the start script fails, see below the steps to be followed:
 
