@@ -6,6 +6,10 @@ This MacOS setup guide will help you to setup Confluent Platform (using Confluen
 
 ![image](docs/architecture-diagram.png)
 
+CfK demo based on https://github.com/confluentinc/confluent-kubernetes-examples/quickstart-deploy
+
+MongoDB demo based on: https://github.com/mongodb/mongodb-kubernetes-operator/blob/master/config/samples/mongodb.com_v1_mongodbcommunity_additional_mongod_config_cr.yaml
+
 # Pre-requisites
 - Local install of brew
 - Local install of jq/curl
