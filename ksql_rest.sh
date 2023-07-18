@@ -21,8 +21,8 @@ EOF
 	  read body
 	  read code
 	  echo ""
-	  echo "Status: $code"
 	  echo "$body" | jq -r ".[]"
+	  echo "Status: $code"
 	}
 sleep 3;
 done < $1
