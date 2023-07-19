@@ -166,9 +166,9 @@ curl connect.localhost:8083/connectors/users/status | jq
 
 ### MongoDB
 ```
-helm install community-operator mongodb/community-operator --namespace confluent
+helm upgrade --install community-operator mongodb/community-operator --namespace confluent
 
-kubectl apply -f mongodb_community.yaml --namespace confluent
+kubectl apply -f mongodb-community.yaml --namespace confluent
 
 kubectl get pods
 ```
@@ -246,7 +246,7 @@ kubectl config set-context --current --namespace=confluent
 
 kubectl delete -f confluent-mongodb-connector.yaml
 
-kubectl delete -f mongodb_community.yaml
+kubectl delete -f mongodb-community.yaml
 
 helm uninstall community-operator
 

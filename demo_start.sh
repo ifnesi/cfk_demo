@@ -85,7 +85,7 @@ echo "5. Installing MongoDB Community edition"
 echo "---------------------------------------"
 helm upgrade --install community-operator mongodb/community-operator --namespace $NAMESPACE
 verifyPods
-kubectl apply -f mongodb_community.yaml --namespace $NAMESPACE
+kubectl apply -f mongodb-community.yaml --namespace $NAMESPACE
 verifyPods
 kubectl get mdbc
 
