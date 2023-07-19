@@ -1,6 +1,6 @@
-# Confluent for Kubernetes Demo
-
 ![image](docs/confluent-logo-300-2.png)
+
+# Confluent for Kubernetes Demo
 
 This guide assumes the users are familiar with Kubernetes and Confluent for Kubernetes as it will go straight to action, otherwise to learn more about that, see reference materials below:
 - [Introducing Confluent for Kubernetes](https://www.confluent.io/blog/confluent-for-kubernetes-offers-cloud-native-kafka-automation)
