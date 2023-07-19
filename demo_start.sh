@@ -75,8 +75,8 @@ kubectl apply -f confluent-datagen-connectors.yaml --namespace $NAMESPACE
 sleep 3
 echo ""
 echo "Connector status:"
-curl connect-bootstrap-lb.localhost:8083/connectors/pageviews/status | jq
-curl connect-bootstrap-lb.localhost:8083/connectors/users/status | jq
+curl connect.localhost:8083/connectors/pageviews/status | jq
+curl connect.localhost:8083/connectors/users/status | jq
 
 # Install MongoDB Community edition
 echo ""
@@ -105,7 +105,7 @@ kubectl apply -f confluent-mongodb-connector.yaml --namespace $NAMESPACE
 sleep 3
 echo ""
 echo "Connector status:"
-curl connect-bootstrap-lb.localhost:8083/connectors/mongodb-sink/status | jq
+curl connect.localhost:8083/connectors/mongodb-sink/status | jq
 
 echo ""
 echo "Script is completed! Please go to http://controlcenter.localhost:9021 to access Confluent Control Center"

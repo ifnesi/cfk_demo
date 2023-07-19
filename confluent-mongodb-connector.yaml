@@ -25,6 +25,6 @@ spec:
     value.converter.schema.registry.url: http://schemaregistry.confluent.svc.cluster.local:8081
 
 # View connectors/status
-# curl connect-bootstrap-lb.localhost:8083/connectors | jq
-# curl connect-bootstrap-lb.localhost:8083/connectors/mongodb-sink/status | jq
-# curl connect-bootstrap-lb.localhost:8083/connectors/mongodb-sink/status | jq -r '.tasks[0].trace'
+# curl connect.localhost:8083/connectors | jq
+# curl connect.localhost:8083/connectors/mongodb-sink/status | jq
+# curl connect.localhost:8083/connectors/mongodb-sink/status | jq -r '.tasks[0].trace'
