@@ -11,16 +11,15 @@ replicas=$(grep '# scale kafka' $YAML_FILE | awk '{print $2}')
 if [ $# -eq 0 ]; then
     echo "ERROR: Missing argument"
     factor=0
-elif [ $1 == '-u' ]; then
+elif [ $1 == '-u' ]; then # up
     factor=1
-elif [ $1 == '-d' ]; then
+elif [ $1 == '-d' ]; then # down
     factor=-1
-elif [ $1 == '-h' ]; then
-    factor=0
-elif [ $1 == '-c' ]; then
+elif [ $1 == '-c' ]; then # count
     echo "Current Kafka broker(s) count: $replicas"
+    echo ""
     exit 1
-elif [ $1 == '-h' ]; then
+elif [ $1 == '-h' ]; then # help
     factor=0
 else
     echo "ERROR: Invalid argument"
