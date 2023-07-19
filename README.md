@@ -260,7 +260,7 @@ helm uninstall confluent-operator
 ```
 
 # External References
-CfK demo based on: https://github.com/confluentinc/confluent-kubernetes-examples/quickstart-deploy
+CfK demo based on: https://github.com/confluentinc/confluent-kubernetes-examples/tree/master/quickstart-deploy
 
 MongoDB demo based on: https://github.com/mongodb/mongodb-kubernetes-operator/blob/master/config/samples/mongodb.com_v1_mongodbcommunity_additional_mongod_config_cr.yaml
 
