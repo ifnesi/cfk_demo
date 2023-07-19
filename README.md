@@ -1,8 +1,15 @@
+# Confluent for Kubernetes Demo
+
 ![image](docs/confluent-logo-300-2.png)
 
-# Confluent for Kubernetes Demo - Overview
+This guide assumes the users are familiar with Kubernetes and Confluent for Kubernetes as it will go straight to action, otherwise to learn more about that, see reference materials below:
+- [Introducing Confluent for Kubernetes](https://www.confluent.io/blog/confluent-for-kubernetes-offers-cloud-native-kafka-automation)
+- [Confluent for Kubernetes - Overview](https://docs.confluent.io/operator/current/overview.html)
+<br><br>
 
-This guide, designed for MacOS, will help you to setup Confluent Platform (using Confluent for Kubernetes) and MongoDB Community edition (using MongoDB Operator).
+# Demo Overview
+
+This guide, designed for MacOS, will help you setup Confluent Platform (using Confluent for Kubernetes) and MongoDB Community edition (using MongoDB Operator).
 
 The following TCP ports will be open (as external access through `*.localhost` will be enabled):
 <table border=1>
@@ -16,16 +23,9 @@ The following TCP ports will be open (as external access through `*.localhost` w
   <tr><td>kafka.localhost</td><td align="right">9092</td></tr>
 </table>
 
+### Demo Diagram
 ![image](docs/architecture-diagram.png)
 
-CfK demo based on: https://github.com/confluentinc/confluent-kubernetes-examples/quickstart-deploy
-
-MongoDB demo based on: https://github.com/mongodb/mongodb-kubernetes-operator/blob/master/config/samples/mongodb.com_v1_mongodbcommunity_additional_mongod_config_cr.yaml
-
-To learn more about Confluent for Kubernetes, see reference materials below:
-- [Introducing Confluent for Kubernetes](https://www.confluent.io/blog/confluent-for-kubernetes-offers-cloud-native-kafka-automation)
-- [Confluent for Kubernetes - Overview](https://docs.confluent.io/operator/current/overview.html)
-<br><br>
 # Pre-requisites
 - `brew`
 - `jq`
@@ -258,3 +258,12 @@ kubectl delete -f confluent-platform.yaml
 
 helm uninstall confluent-operator
 ```
+
+# External References
+CfK demo based on: https://github.com/confluentinc/confluent-kubernetes-examples/quickstart-deploy
+
+MongoDB demo based on: https://github.com/mongodb/mongodb-kubernetes-operator/blob/master/config/samples/mongodb.com_v1_mongodbcommunity_additional_mongod_config_cr.yaml
+
+Check out [Confluent's Developer portal](https://developer.confluent.io), it has free courses, documents, articles, blogs, podcasts and so many more content to get you up and running with a fully managed Apache Kafka service.
+
+Disclaimer: I work for Confluent :wink:
