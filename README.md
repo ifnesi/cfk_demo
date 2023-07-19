@@ -30,6 +30,7 @@ The following TCP ports will be open (as external access through `*.localhost` w
 - `brew`
 - `jq`
 - `curl`
+- `helm`
 - [Docker Desktop](https://docs.docker.com/get-docker/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos)
 
