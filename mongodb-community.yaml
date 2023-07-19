@@ -37,12 +37,6 @@ spec:
   additionalMongodConfig:
     storage.wiredTiger.engineConfig.journalCompressor: zlib
 
-externalAccess:
-  externalService:
-    spec:
-      type: LoadBalancer
-      port: 27017
-
 # the user credentials will be generated from this secret
 # once the credentials are generated, this secret is no longer required
 ---
