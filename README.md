@@ -4,24 +4,27 @@
 
 This guide, designed for MacOS, will help you to setup Confluent Platform (using Confluent for Kubernetes) and MongoDB Community edition (using MongoDB Operator).
 
-The following ports will be open (as external access through `*.localhost` will be enabled):
-- confluent-operator.localhost: `7778/TCP`
-- connect.localhost: `8083/TCP`
-- controlcenter.localhost: `9021/TCP`
-- kafka.localhost: `9092/TCP`
-- kafkarestproxy.localhost: `80/TCP`
-- ksqldb.localhost: `8088/TCP`
-- schemaregistry.localhost: `8081/TCP`
+The following TCP ports will be open (as external access through `*.localhost` will be enabled):
+<table border=1>
+  <tr><td><b>Domain</b></td><td><b>Port (TCP)</b></td></tr>
+  <tr><td>kafkarestproxy.localhost</td><td align="right">80</td></tr>
+  <tr><td>confluent-operator.localhost</td><td align="right">7778</td></tr>
+  <tr><td>schemaregistry.localhost</td><td align="right">8081</td></tr>
+  <tr><td>connect.localhost</td><td align="right">8083</td></tr>
+  <tr><td>ksqldb.localhost</td><td align="right">8088</td></tr>
+  <tr><td>controlcenter.localhost</td><td align="right">9021</td></tr>
+  <tr><td>kafka.localhost</td><td align="right">9092</td></tr>
+</table>
 
 ![image](docs/architecture-diagram.png)
 
-CfK demo based on https://github.com/confluentinc/confluent-kubernetes-examples/quickstart-deploy
+CfK demo based on: https://github.com/confluentinc/confluent-kubernetes-examples/quickstart-deploy
 
 MongoDB demo based on: https://github.com/mongodb/mongodb-kubernetes-operator/blob/master/config/samples/mongodb.com_v1_mongodbcommunity_additional_mongod_config_cr.yaml
 
 To learn more about Confluent for Kubernetes, see reference materials below:
-- https://www.confluent.io/blog/confluent-for-kubernetes-offers-cloud-native-kafka-automation
-- https://docs.confluent.io/operator/current/overview.html
+- [Introducing Confluent for Kubernetes](https://www.confluent.io/blog/confluent-for-kubernetes-offers-cloud-native-kafka-automation)
+- [Confluent for Kubernetes - Overview](https://docs.confluent.io/operator/current/overview.html)
 <br><br>
 # Pre-requisites
 - `brew`
@@ -32,8 +35,7 @@ To learn more about Confluent for Kubernetes, see reference materials below:
 
 # Installation (only need to do that once)
 
-Start Docker
-Make sure to check the boxes `Enable Kubernetes` and `Show system containers (advanced)`:
+Start Docker and make sure to check the boxes `Enable Kubernetes` and `Show system containers (advanced)`:
 
 <img src="docs/docker_settings.png" height="150"><br>
 
@@ -101,7 +103,9 @@ Output example:
 }
 ```
 
-To show how easily scale the Kafka Cluster by adding a new broker (Confluent Server), edit the file `confluent-platform.yaml` by changing line #24 from `  replicas: 3` to `  replicas: 4`, then run the command `kubectl apply -f confluent-platform.yaml --namespace confluent`. In around 3~5 minutes a new broker will be added to the cluster as well as a new Self Balancing Cluster task will be started. To scale back down change the number of replicas back to `3` and run the same command.
+To show how easily scale the Kafka Cluster by adding a new broker (Confluent Server), run the script `./demo_scale.sh -u` to scale up or `./demo_scale.sh -d` to scale down.
+
+Alternativelly, edit the file `confluent-platform.yaml` by changing line #24 from `  replicas: 3` to `  replicas: 4` (for example), then run the command `kubectl apply -f confluent-platform.yaml --namespace confluent`. In around 3~5 minutes a new broker will be added to the cluster as well as a new Self Balancing Cluster task will be started. To scale back down change the number of replicas back to `3` and run the same command.
 
 ## In case the start script fails, see below the steps to be followed:
 
@@ -149,6 +153,15 @@ zookeeper-2                           1/1     Running   0             2m
 ### Datagen connectors
 ```
 kubectl apply -f confluent-datagen-connectors.yaml
+```
+
+Wait for connectors to be Running. To view connectors statuses, try:
+```
+curl connect.localhost:8083/connectors
+
+curl connect.localhost:8083/connectors/pageviews/status | jq
+
+curl connect.localhost:8083/connectors/users/status | jq
 ```
 
 ### MongoDB
@@ -216,11 +229,11 @@ kubectl apply -f confluent-mongodb-connector.yaml
 
 Wait for connector to be Running. To view connector status, try:
 ```
-curl connect-bootstrap-lb.localhost:8083/connectors
+curl connect.localhost:8083/connectors
 
-curl connect-bootstrap-lb.localhost:8083/connectors/mongodb-sink/status | jq
+curl connect.localhost:8083/connectors/mongodb-sink/status | jq
 
-curl connect-bootstrap-lb.localhost:8083/connectors/mongodb-sink/status | jq -r '.tasks[0].trace'
+curl connect.localhost:8083/connectors/mongodb-sink/status | jq -r '.tasks[0].trace'
 ```
 
 # Stopping the demo
