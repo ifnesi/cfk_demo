@@ -34,6 +34,18 @@ if [ $factor -eq 0 ]; then
     exit 1
 fi
 
+# Wait for docker to be running
+if (! docker stats --no-stream > /dev/null 2>&1); then
+    echo "ERROR: Please start Docker Desktop, then run the './demo_start.sh' script"
+    exit 1
+fi
+
+# Check if CfK is running
+if [ $(kubectl get pods | grep 'confluent-operator-849887dd4d-' | grep -c '1/1') -ne 1 ]; then
+    echo "ERROR: Confluent for Kubernetes pod is not running"
+    exit 1
+fi
+
 # Increment/decrement brokers
 replicas_new=$((replicas + $factor))
 
