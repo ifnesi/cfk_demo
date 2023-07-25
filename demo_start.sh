@@ -34,7 +34,7 @@ verifyPods() {
 kubectl config set-context --current --namespace=$NAMESPACE
 
 # Wait for docker to be running
-if (! docker stats --no-stream ); then
+if (! docker stats --no-stream > /dev/null 2>&1); then
     echo "ERROR: Please start Docker Desktop"
     exit 1
 fi
@@ -44,7 +44,7 @@ echo ""
 echo "--------------------------------"
 echo "1. Installing Confluent Operator"
 echo "--------------------------------"
-helm upgrade --install confluent-operator confluentinc/confluent-for-kubernetes --namespace $NAMESPACE
+helm upgrade --install confluent-operator confluentinc/confluent-for-kubernetes --namespace $NAMESPACE --set kRaftEnabled=true
 verifyPods
 
 # Create Confluent Platform pods
