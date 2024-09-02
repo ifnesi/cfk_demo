@@ -54,6 +54,8 @@ kubectl create namespace confluent
 helm repo add confluentinc https://packages.confluent.io/helm
 
 helm repo add mongodb https://mongodb.github.io/helm-charts
+
+helm repo update
 ```
 
 # Running the demo

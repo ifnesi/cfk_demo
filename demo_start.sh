@@ -7,9 +7,10 @@ NAMESPACE="confluent"
 verifyPods() {
     # Function to wait for the pod(s) to be created and ready
     sleep 2
+    echo -n "Waiting for pod(s) to be ready."
     while :
     do
-        echo "Waiting for pod(s) to be ready..."
+        echo -n "."
         counter=0
         for i in {1..5}
         do

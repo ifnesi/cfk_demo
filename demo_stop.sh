@@ -10,9 +10,10 @@ kubectl delete -f confluent-datagen-connectors.yaml
 kubectl delete -f confluent-platform.yaml
 helm uninstall confluent-operator
 
+echo -n "Waiting for pod(s) to be terminated."
 while :
 do
-    echo "Waiting for pod(s) to be terminated..."
+    echo -n "."
     counter=0
     for i in {1..2}
     do
