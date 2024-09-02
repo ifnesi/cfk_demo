@@ -147,9 +147,9 @@ kafkarestproxy-0                      1/1     Running   0             75s
 ksqldb-0                              1/1     Running   0             2m
 schemaregistry-0                      1/1     Running   0             75s
 schemaregistry-1                      1/1     Running   0             75s
-zookeeper-0                           1/1     Running   0             2m
-zookeeper-1                           1/1     Running   0             2m
-zookeeper-2                           1/1     Running   0             2m
+kraftcontroller-0                     1/1     Running   0             2m
+kraftcontroller-1                     1/1     Running   0             2m
+kraftcontroller-2                     1/1     Running   0             2m
 ```
 
 
@@ -193,9 +193,9 @@ mongo-2                                        2/2     Running   0              
 mongodb-kubernetes-operator-...                1/1     Running   0               79s
 schemaregistry-0                               1/1     Running   0               2m43s
 schemaregistry-1                               1/1     Running   0               2m43s
-zookeeper-0                                    1/1     Running   0               3m28s
-zookeeper-1                                    1/1     Running   0               3m28s
-zookeeper-2                                    1/1     Running   0               3m28s
+kraftcontroller-0                              1/1     Running   0               3m28s
+kraftcontroller-1                              1/1     Running   0               3m28s
+kraftcontroller-2                              1/1     Running   0               3m28s
 ```
 
 ### ksqlDB

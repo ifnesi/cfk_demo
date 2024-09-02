@@ -1,18 +1,17 @@
 # Based on https://github.com/confluentinc/confluent-kubernetes-examples/quickstart-deploy
 ---
-# Zookepper
+# KRaft
 apiVersion: platform.confluent.io/v1beta1
-kind: Zookeeper
+kind: KRaftController
 metadata:
- name: zookeeper
- namespace: confluent
+  name: kraftcontroller
+  namespace: confluent
 spec:
- replicas: 3
- image:
-   application: confluentinc/cp-zookeeper:7.6.0
-   init: confluentinc/confluent-init-container:2.9.2
- dataVolumeCapacity: 10Gi
- logVolumeCapacity: 10Gi
+  dataVolumeCapacity: 10G
+  image:
+    application: docker.io/confluentinc/cp-server:7.7.0
+    init: confluentinc/confluent-init-container:2.9.2
+  replicas: 3
 ---
 # Kafka Cluster
 apiVersion: platform.confluent.io/v1beta1
@@ -21,16 +20,15 @@ metadata:
   name: kafka
   namespace: confluent
 spec:
+  dataVolumeCapacity: 100Gi
   replicas: 3  # scale kafka
   image:
-    application: confluentinc/cp-server:7.6.0
+    application: confluentinc/cp-server:7.7.0
     init: confluentinc/confluent-init-container:2.9.2
-  dataVolumeCapacity: 100Gi
-  metricReporter:
-    enabled: true
   dependencies:
-    zookeeper:
-      endpoint: zookeeper.confluent.svc.cluster.local:2181
+    kRaftController:
+      clusterRef:
+        name: kraftcontroller
   listeners:
       external:
         externalAccess:
@@ -47,7 +45,7 @@ metadata:
 spec:
   replicas: 1
   image:
-    application: confluentinc/cp-server-connect:7.6.0
+    application: confluentinc/cp-server-connect:7.7.0
     init: confluentinc/confluent-init-container:2.9.2
   build:
     type: onDemand
@@ -81,7 +79,7 @@ metadata:
 spec:
   replicas: 1
   image:
-    application: confluentinc/cp-ksqldb-server:7.6.0
+    application: confluentinc/cp-ksqldb-server:7.7.0
     init: confluentinc/confluent-init-container:2.9.2
   dataVolumeCapacity: 10Gi
   dependencies:
@@ -104,7 +102,7 @@ metadata:
 spec:
   replicas: 1
   image:
-    application: confluentinc/cp-enterprise-control-center:7.6.0
+    application: confluentinc/cp-enterprise-control-center:7.7.0
     init: confluentinc/confluent-init-container:2.9.2
   dataVolumeCapacity: 10Gi
   dependencies:
@@ -131,7 +129,7 @@ metadata:
 spec:
   replicas: 2
   image:
-    application: confluentinc/cp-schema-registry:7.6.0
+    application: confluentinc/cp-schema-registry:7.7.0
     init: confluentinc/confluent-init-container:2.9.2
   externalAccess:
     type: loadBalancer
@@ -148,7 +146,7 @@ metadata:
 spec:
   replicas: 1
   image:
-    application: confluentinc/cp-kafka-rest:7.6.0
+    application: confluentinc/cp-kafka-rest:7.7.0
     init: confluentinc/confluent-init-container:2.9.2
   dependencies:
     schemaRegistry:
