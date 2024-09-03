@@ -41,7 +41,7 @@ if (! docker stats --no-stream > /dev/null 2>&1); then
 fi
 
 # Check if CfK is running
-if [ $(kubectl get pods | grep 'confluent-operator-849887dd4d-' | grep -c '1/1') -ne 1 ]; then
+if [ $(kubectl get pods | grep 'confluent-operator-' | grep -c '1/1') -ne 1 ]; then
     echo "ERROR: Confluent for Kubernetes pod is not running"
     exit 1
 fi

@@ -32,6 +32,7 @@ verifyPods() {
 }
 
 # Set namespace
+kubectl create namespace $NAMESPACE
 kubectl config set-context --current --namespace=$NAMESPACE
 
 # Wait for docker to be running
