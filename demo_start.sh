@@ -91,7 +91,7 @@ kubectl apply -f mongodb-community.yaml --namespace $NAMESPACE
 verifyPods
 kubectl get mdbc
 
-# Submit ksqlDB queries via HTTP
+# Submit ksqlDB queries via HTTP 
 echo ""
 echo "------------------------------------"
 echo "6. Submiting ksqlDB queries via HTTP"
